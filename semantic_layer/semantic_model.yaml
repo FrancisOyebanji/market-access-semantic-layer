@@ -1,0 +1,105 @@
+# Semantic layer over the raw market-access warehouse.
+# Business terms -> metrics -> SQL, plus a taxonomy of synonyms so the NL resolver
+# ("Prism") can map a plain-English question to the right numbers.
+#
+# THREE metrics below carry an intentionally seeded `defect:` (the kind of mistake
+# a real semantic layer makes). The certification harness catches each one by
+# comparing the generated SQL's answer to the independent source-of-truth. Each
+# defect has a `corrected:` spec showing the fix that makes certification pass.
+
+dimensions:
+  brand:
+    label: Brand
+    column: dim_product.brand
+    synonyms: [brand, product, drug, therapy, ndc]
+  period:
+    label: Period
+    column: period
+    synonyms: [period, quarter, q1, q2, q3, q4, time, when]
+
+base_metrics:
+  gross_sales:
+    label: Gross Sales
+    table: fact_sales
+    measure: "SUM(gross_sales)"
+    synonyms: [gross sales, gross, wac sales, list sales, sales at wac]
+    description: Manufacturer sales to wholesalers valued at WAC (list price).
+
+  chargebacks:
+    label: Chargebacks
+    table: fact_chargebacks
+    measure: "SUM(chargeback_amt)"
+    synonyms: [chargebacks, chargeback, cb, wholesaler chargebacks]
+    description: Credits to wholesalers for the WAC-minus-contract-price spread.
+    defect:
+      type: fanout_join
+      note: >
+        Joins fact_chargebacks to fact_sales on product_id to "enrich" with sales,
+        a many-to-many that fans out rows and multiplies the summed chargebacks.
+    corrected:
+      note: Aggregate fact_chargebacks directly; do not join to fact_sales.
+
+  commercial_rebates:
+    label: Commercial Rebates
+    table: fact_rebates
+    measure: "SUM(rebate_amt)"
+    filter: "rebate_type = 'commercial'"
+    synonyms: [commercial rebates, payer rebates, pbm rebates, contract rebates]
+    description: Rebates paid under commercial payer / PBM contracts.
+
+  medicaid_rebates:
+    label: Medicaid Rebates
+    table: fact_rebates
+    measure: "SUM(rebate_amt)"
+    filter: "rebate_type = 'medicaid'"
+    synonyms: [medicaid rebates, government rebates, ura, medicaid ura, statutory rebates]
+    description: Medicaid unit-rebate-amount (URA) statutory rebates by state.
+
+  total_rebates:
+    label: Total Rebates
+    table: fact_rebates
+    measure: "SUM(rebate_amt)"
+    synonyms: [total rebates, all rebates, rebates]
+    description: Commercial plus Medicaid rebates.
+
+  fees:
+    label: Fees
+    table: fact_fees
+    measure: "SUM(fee_amt)"
+    synonyms: [fees, distribution fees, admin fees, service fees, gpo fees]
+    description: Distribution service fees and GPO administrative fees.
+
+derived_metrics:
+  net_sales:
+    label: Net Sales
+    synonyms: [net sales, net, net revenue, net-to-gross sales]
+    description: Gross sales minus all gross-to-net deductions.
+    components: ["+gross_sales", "-chargebacks", "-commercial_rebates", "-fees"]
+    defect:
+      type: missing_component
+      missing: medicaid_rebates
+      note: >
+        The net-sales definition subtracts chargebacks, commercial rebates and fees
+        but NOT Medicaid rebates, so net sales is overstated. A classic "the layer
+        only joined the commercial rebate table" error.
+    corrected:
+      components: ["+gross_sales", "-chargebacks", "-commercial_rebates", "-medicaid_rebates", "-fees"]
+
+  gtn_deductions:
+    label: Gross-to-Net Deductions
+    synonyms: [deductions, gross to net deductions, gtn deductions, gross-to-net dollars]
+    description: Total dollars deducted from gross to reach net.
+    components: ["+chargebacks", "+commercial_rebates", "+medicaid_rebates", "+fees"]
+
+  gtn_pct:
+    label: Gross-to-Net Percentage
+    synonyms: [gtn, gross to net, gross-to-net, gtn percent, gtn %, gross to net percentage]
+    description: Deductions as a percent of gross sales.
+    ratio: {numerator: gtn_deductions, denominator: net_sales}
+    defect:
+      type: wrong_denominator
+      note: >
+        GTN % is computed as deductions / NET sales instead of deductions / GROSS
+        sales, inflating the percentage and breaking the standard definition.
+    corrected:
+      ratio: {numerator: gtn_deductions, denominator: gross_sales}

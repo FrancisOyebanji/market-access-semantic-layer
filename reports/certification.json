@@ -1,0 +1,350 @@
+{
+  "certification": {
+    "n_questions": 10,
+    "n_resolved": 10,
+    "n_certified": 5,
+    "n_failed": 5,
+    "certification_rate": 0.5,
+    "metric_sweep_production": {
+      "gross_sales": {
+        "overall": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "brand": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "has_seeded_defect": false
+      },
+      "chargebacks": {
+        "overall": {
+          "certified": false,
+          "max_rel_error": 0.9583
+        },
+        "brand": {
+          "certified": false,
+          "max_rel_error": 0.9583
+        },
+        "has_seeded_defect": true
+      },
+      "commercial_rebates": {
+        "overall": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "brand": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "has_seeded_defect": false
+      },
+      "medicaid_rebates": {
+        "overall": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "brand": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "has_seeded_defect": false
+      },
+      "total_rebates": {
+        "overall": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "brand": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "has_seeded_defect": false
+      },
+      "fees": {
+        "overall": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "brand": {
+          "certified": true,
+          "max_rel_error": 0.0
+        },
+        "has_seeded_defect": false
+      },
+      "net_sales": {
+        "overall": {
+          "certified": false,
+          "max_rel_error": 1.2996
+        },
+        "brand": {
+          "certified": false,
+          "max_rel_error": 1.3599
+        },
+        "has_seeded_defect": true
+      },
+      "gtn_deductions": {
+        "overall": {
+          "certified": false,
+          "max_rel_error": 0.8606
+        },
+        "brand": {
+          "certified": false,
+          "max_rel_error": 0.8656
+        },
+        "has_seeded_defect": false
+      },
+      "gtn_pct": {
+        "overall": {
+          "certified": false,
+          "max_rel_error": 1.2673
+        },
+        "brand": {
+          "certified": false,
+          "max_rel_error": 1.2979
+        },
+        "has_seeded_defect": true
+      }
+    },
+    "failing_metrics": [
+      "chargebacks",
+      "gtn_deductions",
+      "gtn_pct",
+      "net_sales"
+    ],
+    "metrics_fixed_by_corrections": [
+      "chargebacks",
+      "commercial_rebates",
+      "fees",
+      "gross_sales",
+      "gtn_deductions",
+      "gtn_pct",
+      "medicaid_rebates",
+      "net_sales",
+      "total_rebates"
+    ],
+    "all_fixed": true
+  },
+  "cases": [
+    {
+      "question": "What were gross sales in Q1?",
+      "metric": "gross_sales",
+      "dimension": null,
+      "status": "certified",
+      "prism_result": 26845805.0,
+      "source_of_truth": 26845805.0,
+      "max_rel_error": 0.0,
+      "defect": null
+    },
+    {
+      "question": "Show total rebates by brand",
+      "metric": "total_rebates",
+      "dimension": "brand",
+      "status": "certified",
+      "prism_result": {
+        "Brand A": 9004765.35,
+        "Brand B": 3612693.61,
+        "Brand C": 18407573.1,
+        "Brand D": 636736.52
+      },
+      "source_of_truth": {
+        "Brand A": 9004765.35,
+        "Brand B": 3612693.61,
+        "Brand C": 18407573.1,
+        "Brand D": 636736.52
+      },
+      "max_rel_error": 0.0,
+      "defect": null
+    },
+    {
+      "question": "How much did we pay in Medicaid rebates?",
+      "metric": "medicaid_rebates",
+      "dimension": null,
+      "status": "certified",
+      "prism_result": 14800533.53,
+      "source_of_truth": 14800533.53,
+      "max_rel_error": 0.0,
+      "defect": null
+    },
+    {
+      "question": "What were commercial rebates by quarter?",
+      "metric": "commercial_rebates",
+      "dimension": "period",
+      "status": "certified",
+      "prism_result": {
+        "2025-Q3": 3593134.74,
+        "2025-Q1": 4697066.43,
+        "2025-Q2": 4894591.63,
+        "2025-Q4": 3676442.25
+      },
+      "source_of_truth": {
+        "2025-Q1": 4697066.43,
+        "2025-Q2": 4894591.63,
+        "2025-Q3": 3593134.74,
+        "2025-Q4": 3676442.25
+      },
+      "max_rel_error": 0.0,
+      "defect": null
+    },
+    {
+      "question": "What are total fees for Brand B?",
+      "metric": "fees",
+      "dimension": null,
+      "status": "certified",
+      "prism_result": 390378.26,
+      "source_of_truth": 390378.26,
+      "max_rel_error": 0.0,
+      "defect": null
+    },
+    {
+      "question": "What were net sales in Q1?",
+      "metric": "net_sales",
+      "dimension": null,
+      "status": "failed",
+      "prism_result": -55822090.59,
+      "source_of_truth": 15236051.06,
+      "max_rel_error": 1.2729,
+      "defect": "missing_component"
+    },
+    {
+      "question": "Show net sales by brand",
+      "metric": "net_sales",
+      "dimension": "brand",
+      "status": "failed",
+      "prism_result": {
+        "Brand A": -54862023.17,
+        "Brand B": -22485037.97,
+        "Brand C": -130267551.46,
+        "Brand D": -4320505.38
+      },
+      "source_of_truth": {
+        "Brand A": 14435917.87,
+        "Brand B": 8091417.85,
+        "Brand C": 39409822.77,
+        "Brand D": 1554259.98
+      },
+      "max_rel_error": 1.3599,
+      "defect": "missing_component"
+    },
+    {
+      "question": "What is gross-to-net percentage by brand?",
+      "metric": "gtn_pct",
+      "dimension": "brand",
+      "status": "failed",
+      "prism_result": {
+        "Brand A": -1.5833,
+        "Brand B": -1.6757,
+        "Brand C": -1.577,
+        "Brand D": -1.6792
+      },
+      "source_of_truth": {
+        "Brand A": 0.4717,
+        "Brand B": 0.4005,
+        "Brand C": 0.412,
+        "Brand D": 0.4145
+      },
+      "max_rel_error": 1.2979,
+      "defect": "wrong_denominator"
+    },
+    {
+      "question": "Total chargebacks for Brand C",
+      "metric": "chargebacks",
+      "dimension": null,
+      "status": "failed",
+      "prism_result": 185557936.56,
+      "source_of_truth": 7731580.69,
+      "max_rel_error": 0.9583,
+      "defect": "fanout_join"
+    },
+    {
+      "question": "Show chargebacks by quarter",
+      "metric": "chargebacks",
+      "dimension": "period",
+      "status": "failed",
+      "prism_result": {
+        "2025-Q3": 96158928.72,
+        "2025-Q1": 77294388.72,
+        "2025-Q2": 70007179.44,
+        "2025-Q4": 59385141.36
+      },
+      "source_of_truth": {
+        "2025-Q1": 3220599.53,
+        "2025-Q2": 2916965.81,
+        "2025-Q3": 4006622.03,
+        "2025-Q4": 2474380.89
+      },
+      "max_rel_error": 0.9583,
+      "defect": "fanout_join"
+    }
+  ],
+  "prompt_review": {
+    "n_prompts": 5,
+    "n_ambiguous": 4,
+    "reviews": [
+      {
+        "prompt": "show me rebates",
+        "resolved_metric": "total_rebates",
+        "ambiguity_flags": [
+          "'Rebates' is ambiguous: commercial, Medicaid, or total?",
+          "No time period specified \u2014 defaults to all periods, which may surprise the user."
+        ],
+        "suggestions": [
+          "Specify the rebate type (commercial / Medicaid / total).",
+          "Add a period (e.g. 'in Q2') or say 'full year'.",
+          "Consider a breakdown ('by brand' / 'by quarter') if a single total isn't intended."
+        ],
+        "is_ambiguous": true,
+        "improved_prompt": "What is total rebates for Brand A in Q1?"
+      },
+      {
+        "prompt": "how are sales doing",
+        "resolved_metric": null,
+        "ambiguity_flags": [
+          "No metric matched \u2014 the question does not map to a known measure.",
+          "No time period specified \u2014 defaults to all periods, which may surprise the user."
+        ],
+        "suggestions": [
+          "Name a specific metric, e.g. 'net sales', 'Medicaid rebates', 'GTN %'.",
+          "Add a period (e.g. 'in Q2') or say 'full year'."
+        ],
+        "is_ambiguous": true,
+        "improved_prompt": "What is net sales for Brand A in Q1?"
+      },
+      {
+        "prompt": "what is the gtn",
+        "resolved_metric": "gtn_pct",
+        "ambiguity_flags": [
+          "No time period specified \u2014 defaults to all periods, which may surprise the user."
+        ],
+        "suggestions": [
+          "Add a period (e.g. 'in Q2') or say 'full year'.",
+          "Consider a breakdown ('by brand' / 'by quarter') if a single total isn't intended."
+        ],
+        "is_ambiguous": true,
+        "improved_prompt": "What is gtn pct for Brand A in Q1?"
+      },
+      {
+        "prompt": "rebates for Brand A",
+        "resolved_metric": "total_rebates",
+        "ambiguity_flags": [
+          "'Rebates' is ambiguous: commercial, Medicaid, or total?",
+          "No time period specified \u2014 defaults to all periods, which may surprise the user."
+        ],
+        "suggestions": [
+          "Specify the rebate type (commercial / Medicaid / total).",
+          "Add a period (e.g. 'in Q2') or say 'full year'."
+        ],
+        "is_ambiguous": true,
+        "improved_prompt": "What is total rebates for Brand A in Q1?"
+      },
+      {
+        "prompt": "net sales by brand in Q2",
+        "resolved_metric": "net_sales",
+        "ambiguity_flags": [],
+        "suggestions": [],
+        "is_ambiguous": false,
+        "improved_prompt": "What is net sales for Brand A in Q2?"
+      }
+    ]
+  }
+}

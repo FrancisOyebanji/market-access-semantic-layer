@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Prism Answer Certification</title>
+<style>
+ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#13233a;margin:0}
+ header{background:#0f3d6e;color:#fff;padding:16px 30px} h1{font-size:20px;margin:0}
+ .sub{color:#bcd4ea;font-size:13px}
+ main{max-width:1080px;margin:22px auto;padding:0 18px}
+ .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin-bottom:20px}
+ .kpi{background:#fff;border:1px solid #e1e8ef;border-radius:12px;padding:16px}
+ .kpi .l{color:#5c6f84;font-size:13px}.kpi .v{font-size:22px;font-weight:700;margin-top:4px;color:#0f3d6e}
+ .grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+ .panel{background:#fff;border:1px solid #e1e8ef;border-radius:12px;padding:18px;margin-bottom:18px}
+ .panel h2{font-size:15px;margin:0 0 12px}
+ table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:7px 9px;border-bottom:1px solid #eef2f6;text-align:center}
+ th{color:#5c6f84}
+ .note{background:#e8f0f8;border-left:4px solid #0f3d6e;padding:10px 14px;border-radius:6px;font-size:14px}
+ @media(max-width:800px){.grid{grid-template-columns:1fr}}
+ footer{color:#5c6f84;font-size:12px;text-align:center;margin:24px 0}
+</style></head><body>
+<header><h1>Prism Answer Certification &mdash; market-access semantic layer</h1>
+<div class="sub">Conversational-analytics answers certified against source data &middot; synthetic gross-to-net warehouse</div></header>
+<main>
+<div class="kpis">
+ <div class="kpi"><div class="l">Answers certified</div><div class="v">5/10</div></div>
+ <div class="kpi"><div class="l">Certification rate</div><div class="v">50%</div></div>
+ <div class="kpi"><div class="l">Failing metrics</div><div class="v">4</div></div>
+ <div class="kpi"><div class="l">Prompts flagged ambiguous</div><div class="v">4/5</div></div>
+</div>
+<div class="grid">
+ <div class="panel"><h2>Answer certification &mdash; question by question</h2>
+  <table><tr><th style="text-align:left">question</th><th>metric</th><th>status</th><th>defect</th><th>rel err</th></tr><tr><td style='text-align:left'>What were gross sales in Q1?</td><td>gross_sales</td><td><span style='color:#14804a;font-weight:700'>CERTIFIED</span></td><td></td><td>0.0</td></tr><tr><td style='text-align:left'>Show total rebates by brand</td><td>total_rebates</td><td><span style='color:#14804a;font-weight:700'>CERTIFIED</span></td><td></td><td>0.0</td></tr><tr><td style='text-align:left'>How much did we pay in Medicaid rebates?</td><td>medicaid_rebates</td><td><span style='color:#14804a;font-weight:700'>CERTIFIED</span></td><td></td><td>0.0</td></tr><tr><td style='text-align:left'>What were commercial rebates by quarter?</td><td>commercial_rebates</td><td><span style='color:#14804a;font-weight:700'>CERTIFIED</span></td><td></td><td>0.0</td></tr><tr><td style='text-align:left'>What are total fees for Brand B?</td><td>fees</td><td><span style='color:#14804a;font-weight:700'>CERTIFIED</span></td><td></td><td>0.0</td></tr><tr><td style='text-align:left'>What were net sales in Q1?</td><td>net_sales</td><td><span style='color:#b42318;font-weight:700'>FAILED</span></td><td>missing_component</td><td>1.2729</td></tr><tr><td style='text-align:left'>Show net sales by brand</td><td>net_sales</td><td><span style='color:#b42318;font-weight:700'>FAILED</span></td><td>missing_component</td><td>1.3599</td></tr><tr><td style='text-align:left'>What is gross-to-net percentage by brand?</td><td>gtn_pct</td><td><span style='color:#b42318;font-weight:700'>FAILED</span></td><td>wrong_denominator</td><td>1.2979</td></tr><tr><td style='text-align:left'>Total chargebacks for Brand C</td><td>chargebacks</td><td><span style='color:#b42318;font-weight:700'>FAILED</span></td><td>fanout_join</td><td>0.9583</td></tr><tr><td style='text-align:left'>Show chargebacks by quarter</td><td>chargebacks</td><td><span style='color:#b42318;font-weight:700'>FAILED</span></td><td>fanout_join</td><td>0.9583</td></tr></table></div>
+ <div class="panel"><h2>Metric sweep</h2>
+  <table><tr><th style="text-align:left">metric</th><th>certified</th></tr><tr><td style='text-align:left'>gross_sales </td><td>✅</td></tr><tr><td style='text-align:left'>chargebacks ⚠️</td><td>❌</td></tr><tr><td style='text-align:left'>commercial_rebates </td><td>✅</td></tr><tr><td style='text-align:left'>medicaid_rebates </td><td>✅</td></tr><tr><td style='text-align:left'>total_rebates </td><td>✅</td></tr><tr><td style='text-align:left'>fees </td><td>✅</td></tr><tr><td style='text-align:left'>net_sales ⚠️</td><td>❌</td></tr><tr><td style='text-align:left'>gtn_deductions </td><td>❌</td></tr><tr><td style='text-align:left'>gtn_pct ⚠️</td><td>❌</td></tr></table>
+  <p style="font-size:12px;color:#5c6f84">⚠️ = carries a seeded semantic-layer defect</p></div>
+</div>
+<div class="panel"><h2>What this shows</h2><div class="note">
+ Every Prism answer is checked against an independent source-of-truth computed from the raw facts.
+ The three seeded semantic-layer defects (fan-out join, a missing Medicaid-rebate deduction, and a
+ wrong GTN&nbsp;% denominator) are all caught, traced to root cause, and written up as requirements &mdash;
+ and the corrected definitions re-certify clean (all metrics fixed).
+</div></div>
+</main>
+<footer>Synthetic data &middot; src/market_access/build_dashboard.py &middot; answers graded vs an independent source of truth</footer>
+</body></html>
